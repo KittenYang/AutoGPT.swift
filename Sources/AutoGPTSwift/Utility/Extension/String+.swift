@@ -1,5 +1,5 @@
 //
-//  AutoGPTSwift.swift
+//  String+.swift
 //  AutoGPTSwift
 //
 //  Created by Qitao Yang on 2023/5/7.
@@ -23,34 +23,16 @@
 //  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
+import Foundation
 
 
-let prt = """
-Answer the following questions as best you can. You have access to the following tools:
-
-${tools}
-
-Use the following format:
-
-Question: the input question you must answer
-Thought: you should always think about what to do
-Action: the action to take, should be one of [search]
-Action Input: the input to the action
-Observation: the result of the action
-... (this Thought/Action/Action Input/Observation can repeat N times)
-Thought: I now know the final answer
-Final Answer: the final answer to the original input question
-
-Begin!
-
-Question: ${question}
-Thought:
-"""
-
-let merge = """
-Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question.
-Chat History:
-${history}
-Follow Up Input: ${question}
-Standalone question:
-"""
+extension String {
+    func capture(pattern: String) -> [String]? {
+        guard let regex = try? NSRegularExpression(pattern: pattern, options: []) else { return nil }
+        let matches = regex.matches(in: self, options: [], range: NSRange(location: 0, length: self.count))
+        return matches.compactMap { result in
+            guard let range = Range(result.range(at: 1), in: self) else { return nil }
+            return String(self[range])
+        }
+    }
+}
