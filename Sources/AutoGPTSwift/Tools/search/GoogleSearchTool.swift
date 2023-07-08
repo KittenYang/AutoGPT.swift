@@ -46,7 +46,7 @@ struct GoogleSearchTool: AutoGPTTool {
     
     private func googleSearch(_ question: String) async -> String {
         // Implement Google search functionality here
-//        #error("Modify this property to reflect your SERP's API key, then comment this line out.")
+        #error("Modify this property to reflect your SERP's API key, then comment this line out.")
         let serpApiKey = "SERP_API_KEY"
         let urlString = "https://serpapi.com/search?api_key=\(serpApiKey)&q=\(question.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
         
